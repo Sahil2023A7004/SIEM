@@ -1,6 +1,7 @@
 from scapy.all import sniff, IP, TCP
 from scapy.layers.tls.handshake import TLSClientHello
 import hashlib
+from capture import capture
 
 def metadata(packet):
         source_ip = packet["IP"].src
@@ -106,11 +107,15 @@ def ja4(packet):
         print(f"JA4 of Packet is: {ja4}")       
         return ja4
 def process_packet(packet):
+    cap = capture(packet)
+    if cap is None:
+        return          
     meta = metadata(packet)
     ja4_data = ja4(packet)
     meta["ja4"] = ja4_data
     return meta
 
+sniff(iface="Wi-Fi", filter="tcp port 443", prn=process_packet, store=0)
 
 
 

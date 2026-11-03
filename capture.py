@@ -1,5 +1,4 @@
 from scapy.all import sniff, IP, TCP
-from scapy.layers.tls.handshake import TLSClientHello
 
 def capture(packet):#Packet capture function
     print("Packet Captured\n")
