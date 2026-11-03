@@ -102,6 +102,14 @@ def ja4(packet):
             ext_hash = hashlib.sha256(raw.encode()).hexdigest()[:12]
         else:
             ext_hash = "000000000000"
+        ja4 = prefix + "_" + cipher_hash + "_" + ext_hash
+        print(f"JA4 of Packet is: {ja4}")       
+        return ja4
+def process_packet(packet):
+    meta = metadata(packet)
+    ja4_data = ja4(packet)
+    meta["ja4"] = ja4_data
+    return meta
 
 
 

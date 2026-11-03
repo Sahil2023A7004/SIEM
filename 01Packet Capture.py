@@ -6,7 +6,8 @@ def capture(packet):#Packet capture function
     if not (packet.haslayer(IP) and packet.haslayer(TCP)):#Check for IP and TCP
         return None#If absent abort program.
     return packet#If present return the packet to RAM. 
-sniff(iface="any", filter ="tcp port 443 or tcp port 80", prn=capture, store=0)
+if __name__ == "__main__":
+    sniff(iface="any", filter="tcp port 443 or tcp port 80", prn=capture, store=0)
 # Sniff is an inbuilt function that works with NIC to capture packets, 
 # iface the interface we are using
 # filter is we are capturing trffic on tcp port 443 and 80 only i.e HTTP & HTTPS No UDP 
