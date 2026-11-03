@@ -1,4 +1,4 @@
-from scapy.all import sniff, IP, TCP
+from scapy.all import sniff, IP, TCP, IPv6
 from scapy.layers.tls.record import TLS
 from scapy.layers.tls.handshake import TLSClientHello
 import hashlib
@@ -7,9 +7,14 @@ from capture import capture
 session_table = {}
 
 def metadata(packet):
-    source_ip = packet["IP"].src
-    destination_ip = packet["IP"].dst
-    time_to_live = packet["IP"].ttl
+    if packet.haslayer(IP):
+        source_ip = packet["IP"].src
+        destination_ip = packet["IP"].dst
+        time_to_live = packet["IP"].ttl
+    elif packet.haslayer(IPv6):
+        source_ip = packet["IPv6"].src
+        destination_ip = packet["IPv6"].dst
+        time_to_live = packet["IPv6"].hlim
     source_port = packet["TCP"].sport
     destination_port = packet["TCP"].dport
     flags = str(packet["TCP"].flags)
