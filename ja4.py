@@ -115,8 +115,4 @@ def process_packet(packet):
     meta["ja4"] = ja4_data
     return meta
 
-sniff(iface="Wi-Fi", filter="tcp port 443", prn=process_packet, store=0)
-
-
-
-
+sniff(iface="WiFi", filter="tcp port 443", prn=process_packet, store=0)
