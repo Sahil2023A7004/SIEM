@@ -74,12 +74,19 @@ def ja4(packet):
             if hello.version == 0x0303:
                 versions = "12"
         prefix = f"t{versions}{sni}{c_count}{e_count}{alpn}"
+        hex_ciphers = [f"{c:04x}" for c in clean_ciphers]
+        sorted_ciphers = sorted(hex_ciphers)
+        cipher_string = ",".join(sorted_ciphers)
+        if clean_ciphers:
+         cipher_hash = hashlib.sha256(cipher_string.encode()).hexdigest()[:12]
+        else:
+            cipher_hash = "000000000000"
+        extension_for_hash = []
+        for id in clean_extensions:
+            if id not in (0,16):
+                extension_for_hash.append(id)
+        
 
-
-
-
-
-          
 
 
 
