@@ -1,7 +1,7 @@
 from scapy.all import sniff, IP, TCP, IPv6
 
 def capture(packet):#Packet capture function
-    if not ((packet.haslayer(IP) or packet.haslayer(IPv6)) and packet.haslayer(TCP)):#Check for IP/IPv6 and TCP
+    if not ((packet.haslayer(IP) or packet.haslayer(IPv6)) and packet.haslayer(TCP)):#Check for IP and TCP
         return None#If absent abort program.
     return packet#If present return the packet to RAM. 
 if __name__ == "__main__":
