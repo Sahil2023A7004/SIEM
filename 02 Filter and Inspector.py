@@ -85,7 +85,10 @@ def ja4(packet):
         for id in clean_extensions:
             if id not in (0,16):
                 extension_for_hash.append(id)
-        
+        hex_extensions = [f"{id:04x}" for id in extension_for_hash]
+        sorted_extensions = sorted(hex_extensions)
+        hex_string = ",".join(sorted_extensions)
+
 
 
 
