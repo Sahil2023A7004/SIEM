@@ -88,6 +88,20 @@ def ja4(packet):
         hex_extensions = [f"{id:04x}" for id in extension_for_hash]
         sorted_extensions = sorted(hex_extensions)
         hex_string = ",".join(sorted_extensions)
+        signature_algorithms = []
+        for e in hello.ext:
+         if e.type == 13 and hasattr(e, "sig_algs"):
+            signature_algorithms = e.sig_algs
+        hex_algorithms = [f"{algo:04x}" for algo in signature_algorithms]
+        hex_algorithms = "_".join(hex_algorithms)
+        if signature_algorithms:
+            raw = hex_string + "_" + hex_algorithms
+        else:
+            raw = hex_string
+        if extension_for_hash:
+            ext_hash = hashlib.sha256(raw.encode()).hexdigest()[:12]
+        else:
+            ext_hash = "000000000000"
 
 
 
