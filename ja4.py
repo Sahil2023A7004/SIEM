@@ -2,6 +2,7 @@ from scapy.all import sniff, IP, TCP
 from scapy.layers.tls.handshake import TLSClientHello
 import hashlib
 from capture import capture
+session_table = {}
 
 def metadata(packet):
         source_ip = packet["IP"].src
@@ -113,6 +114,9 @@ def process_packet(packet):
     meta = metadata(packet)
     ja4_data = ja4(packet)
     meta["ja4"] = ja4_data
+    endpoint_a = (meta["source_ip"], meta["source_port"])
+    endpoint_b = (meta["dest_ip"], meta["dest_port"])
+    session_key = tuple(sorted([endpoint_a, endpoint_b]))
     return meta
 
 sniff(iface="WiFi", filter="tcp port 443", prn=process_packet, store=0)
