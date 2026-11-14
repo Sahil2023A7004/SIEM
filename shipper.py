@@ -11,4 +11,15 @@ def enqueue_log(event):
     try:
         log_queue.put_nowait(event)
     except Full:
-         print("[WARN] Queue full (1000 items). Event dropped. Check SIEM API status or increase buffer size.")
+     print("[WARN] Queue full (1000 items). Event dropped. Check SIEM API status or increase buffer size.")
+
+def shipper_worker():
+   while True:
+      event = log_queue.get()
+      try:
+        requests.post(INGEST_URL, json=event, timeout=3)
+      except requests.exceptions.RequestException:
+        print("[ERROR] Request failed. Check your SIEM API connection.")
+      finally:
+        log_queue.task_done()
+        
