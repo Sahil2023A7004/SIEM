@@ -245,7 +245,7 @@ def compute_ja4(clean_ciphers, clean_extensions, versions, sni, alpn, sni_hostna
     return ja4_str, sni_hostname
 
 def process_packet(packet):
-    # Station 1 gatekeeper filter: drop packet if missing IP or TCP
+    # filter: drop packet if missing IP or TCP
     cap = capture(packet)
     if cap is None:
         return
