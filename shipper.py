@@ -24,6 +24,6 @@ def shipper_worker():
         log_queue.task_done()
 
 def start_shipper():
-   thread = threading.Thread(target=shipper_worker, deamon=True)
+   thread = threading.Thread(target=shipper_worker, daemon=True)
    thread.start()
-   
+    
