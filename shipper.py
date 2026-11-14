@@ -22,4 +22,8 @@ def shipper_worker():
         print("[ERROR] Request failed. Check your SIEM API connection.")
       finally:
         log_queue.task_done()
-        
+
+def start_shipper():
+   thread = threading.Thread(target=shipper_worker, deamon=True)
+   thread.start()
+   
